@@ -1,0 +1,8 @@
+---
+- name: Windows Ping Test
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Test WinRM
+      win_ping:
