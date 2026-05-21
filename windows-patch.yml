@@ -5,14 +5,17 @@
 
   tasks:
 
-    - name: Search available Windows updates
+    - name: Install Windows Security Updates
       ansible.windows.win_updates:
         category_names:
           - SecurityUpdates
           - CriticalUpdates
-        state: searched
+          - UpdateRollups
+        reboot: yes
+        reboot_timeout: 3600
+        state: installed
       register: update_result
 
-    - name: Show available updates
+    - name: Show installed updates
       debug:
         var: update_result
