@@ -1,0 +1,19 @@
+---
+- name: Windows Patch Scan
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+
+    - name: Search available Windows updates
+      ansible.windows.win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+          - UpdateRollups
+        state: searched
+      register: update_result
+
+    - name: Show available updates
+      debug:
+        var: update_result

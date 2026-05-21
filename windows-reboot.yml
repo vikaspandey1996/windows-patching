@@ -1,0 +1,29 @@
+---
+- name: Scheduled Windows Reboot
+  hosts: all
+  serial: 1
+  gather_facts: no
+
+  tasks:
+
+    - name: Get current hour
+      ansible.windows.win_shell: |
+        (Get-Date).Hour
+      register: current_hour
+
+    - name: Show current hour
+      debug:
+        var: current_hour.stdout
+
+    - name: Reboot only during maintenance window
+      ansible.windows.win_reboot:
+        reboot_timeout: 3600
+      when:
+        - current_hour.stdout | int >= 1
+        - current_hour.stdout | int < 4
+
+    - name: Skip reboot outside maintenance window
+      debug:
+        msg: "Outside maintenance window. Reboot skipped."
+      when:
+        - current_hour.stdout | int < 1 or current_hour.stdout | int >= 4
