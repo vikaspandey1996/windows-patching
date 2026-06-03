@@ -1,0 +1,13 @@
+---
+- name: OS Discovery
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+
+    - name: Show Host Details
+      debug:
+        msg:
+          - "Host: {{ inventory_hostname }}"
+          - "OS Family: {{ ansible_os_family }}"
+          - "OS Version: {{ ansible_distribution }}"

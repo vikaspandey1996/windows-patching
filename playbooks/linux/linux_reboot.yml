@@ -1,0 +1,14 @@
+---
+- name: Linux Reboot
+  hosts: linux_servers
+  become: yes
+
+  tasks:
+
+    - name: Reboot Linux Server
+      reboot:
+        reboot_timeout: 1800
+
+    - name: Wait for SSH
+      wait_for_connection:
+        timeout: 300

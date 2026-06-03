@@ -1,0 +1,21 @@
+---
+- name: Linux Pre Check
+  hosts: linux_servers
+  become: yes
+  gather_facts: yes
+
+  tasks:
+
+    - name: Check uptime
+      shell: uptime
+      register: uptime
+
+    - debug:
+        var: uptime.stdout
+
+    - name: Check disk space
+      shell: df -h /
+      register: disk
+
+    - debug:
+        var: disk.stdout_lines

@@ -1,0 +1,16 @@
+---
+- name: Linux Post Validation
+  hosts: linux_servers
+  become: yes
+
+  tasks:
+
+    - name: Verify connectivity
+      ping:
+
+    - name: Check uptime
+      shell: uptime
+      register: uptime
+
+    - debug:
+        var: uptime.stdout
